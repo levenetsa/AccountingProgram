@@ -1,2 +1,3 @@
-rootProject.name = 'accprog'
+rootProject.name = 'AccountingProgram'
 
+include 'db', 'ui', 'server'

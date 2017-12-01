@@ -1,13 +1,13 @@
-package com.lev.accprog.mega;
+package com.lev.accprog.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-class Zdarova
+class DBConnector
 {
     public static void main(String[] args) {
-        Zdarova m = new Zdarova();
+        DBConnector m = new DBConnector();
         m.testDatabase();
     }
 

@@ -2,9 +2,20 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/accprog.iml" filepath="$PROJECT_DIR$/.idea/modules/accprog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AccountingProgram.iml" filepath="$PROJECT_DIR$/.idea/modules/AccountingProgram.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/db/AccountingProgram-db.iml" filepath="$PROJECT_DIR$/.idea/modules/db/AccountingProgram-db.iml" group="db" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/db/AccountingProgram-db_main.iml" filepath="$PROJECT_DIR$/.idea/modules/db/AccountingProgram-db_main.iml" group="db" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/db/AccountingProgram-db_test.iml" filepath="$PROJECT_DIR$/.idea/modules/db/AccountingProgram-db_test.iml" group="db" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui/AccountingProgram-ui.iml" filepath="$PROJECT_DIR$/.idea/modules/ui/AccountingProgram-ui.iml" group="ui" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/accprog_main.iml" filepath="$PROJECT_DIR$/.idea/modules/accprog_main.iml" group="accprog" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/accprog_test.iml" filepath="$PROJECT_DIR$/.idea/modules/accprog_test.iml" group="accprog" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/db.iml" filepath="$PROJECT_DIR$/.idea/modules/db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/db_main.iml" filepath="$PROJECT_DIR$/.idea/modules/db_main.iml" group="db" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/db_test.iml" filepath="$PROJECT_DIR$/.idea/modules/db_test.iml" group="db" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/server/server.iml" filepath="$PROJECT_DIR$/.idea/modules/server/server.iml" group="server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui.iml" filepath="$PROJECT_DIR$/.idea/modules/ui.iml" group="accprog" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui/ui_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ui/ui_main.iml" group="ui" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui/ui_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ui/ui_test.iml" group="ui" />
     </modules>
   </component>
 </project>

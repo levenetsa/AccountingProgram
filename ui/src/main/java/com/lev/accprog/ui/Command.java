@@ -1,4 +1,4 @@
-package com.lev.accprog.mega;
+package com.lev.accprog.ui;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.json.JSONObject;

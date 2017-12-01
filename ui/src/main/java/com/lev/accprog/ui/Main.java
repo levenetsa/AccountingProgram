@@ -1,4 +1,4 @@
-package com.lev.accprog.mega;
+package com.lev.accprog.ui;
 
 import java.util.PriorityQueue;
 
