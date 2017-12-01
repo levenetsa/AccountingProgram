@@ -1,12 +1,12 @@
-package com.lev.accprog.ui;
+package com.lev.accprog.ui.core;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class FileIO {
+class FileIO {
 
-    public PriorityQueue<Food> readQueue(String path) throws FileNotFoundException {
+    PriorityQueue<Food> readQueue(String path) throws FileNotFoundException {
         PriorityQueue<Food> readed = new PriorityQueue<>();
         Scanner scanner = new Scanner(new File(path));
         while (scanner.hasNext()){
@@ -31,7 +31,7 @@ public class FileIO {
         return food;
     }
 
-    public void writeQueue(PriorityQueue<Food> queue, String path){
+    void writeQueue(PriorityQueue<Food> queue, String path){
         BufferedWriter bw = null;
         StringBuilder mycontent = new StringBuilder();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");

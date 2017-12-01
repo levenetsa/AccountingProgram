@@ -1,6 +1,4 @@
-package com.lev.accprog.ui;
-
-import com.sun.javaws.exceptions.InvalidArgumentException;
+package com.lev.accprog.ui.core;
 
 import java.lang.Object;
 import java.text.ParseException;
@@ -9,35 +7,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class Food implements  Comparable<Food> {
+public class Food implements Comparable<Food> {
     private TASTE taste;
-    private  GregorianCalendar expirationDate;
-    private  String name;
+    private GregorianCalendar expirationDate;
+    private String name;
 
-    Food(){
+    public Food() {
         this.name = "default";
         this.expirationDate = new GregorianCalendar(2000, 1, 1);
     }
 
-    Food(TASTE taste, String name) {
-        this.taste = taste;
-        this.name = name;
-        this.expirationDate = new GregorianCalendar();
-    }
-
-    public void setDate(int year, int month, int day){
+    void setDate(int year, int month, int day) {
         month--;
         this.expirationDate = new GregorianCalendar(year, month, day);
     }
 
-    public void setDate(String str) throws InvalidArgumentException {
+    public void setDate(String str) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date;
-        try {
-            date = sdf.parse(str);
-        } catch (ParseException e) {
-            throw new InvalidArgumentException(new String[]{e.getMessage()});
-        }
+        date = sdf.parse(str);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         this.expirationDate = new GregorianCalendar(cal.get(Calendar.YEAR),
@@ -53,26 +41,26 @@ public class Food implements  Comparable<Food> {
         return taste;
     }
 
-    public void setTaste(String teaste) throws IllegalArgumentException {
-        this.taste = TASTE.valueOf(teaste);
+    void setTaste(String taste) throws IllegalArgumentException {
+        this.taste = TASTE.valueOf(taste);
     }
 
     public void setTaste(TASTE teaste) {
         this.taste = teaste;
     }
 
-    public  String getName()  {
+    public String getName() {
         return name;
     }
 
-    enum TASTE {
+    public enum TASTE {
         SALTY,
         SPICY,
         SWEET
     }
 
     @Override
-    public int compareTo(Food other){
+    public int compareTo(Food other) {
         return -this.getExpirationDate().compareTo(other.getExpirationDate());
     }
 
@@ -87,5 +75,30 @@ public class Food implements  Comparable<Food> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        String response = "{";
+        if (this.name == null) {
+            response += "null";
+        } else {
+            response += name;
+        }
+        response += ":";
+        if (this.taste == null) {
+            response += "null";
+        } else {
+            response += taste;
+        }
+        response += ":";
+        if (this.expirationDate == null) {
+            response += "null";
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = expirationDate.getTime();
+            response += sdf.format(date);
+        }
+        return response + "}";
     }
 }

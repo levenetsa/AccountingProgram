@@ -1,8 +1,12 @@
 package com.lev.accprog.ui;
 
+import com.lev.accprog.ui.core.Command;
+import com.lev.accprog.ui.core.QueueHolder;
+import com.lev.accprog.ui.view.AccountingWindow;
+
 import java.util.PriorityQueue;
 
-public class Main {
+public class AccountingProgram {
 
     private static final boolean CONSOLE_MODE = false;
     private static final String HELP = "You should pass file name as argument for correct program execution!";
@@ -23,8 +27,7 @@ public class Main {
         if (CONSOLE_MODE){
             queueHolder.initListening();
         } else {
-            AccountingView accountingView = new AccountingView(queueHolder);
-            accountingView.initView();
+            new AccountingWindow(queueHolder).run();
         }
     }
 

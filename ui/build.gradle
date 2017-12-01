@@ -1,15 +1,30 @@
-version '1.0-SNAPSHOT'
+apply plugin: 'application'
 
-apply plugin: 'java'
+
+mainClassName = 'com.lev.accprog.ui.Main'
 
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven{
+        url "http://migrations.sourceforge.net/maven/release"
+    }
 }
 
 dependencies {
-    compile group: 'org.eclipse.swt', name: 'org.eclipse.swt.win32.win32.x86', version: '4.3'
+    compile group: 'org.eclipse.swt', name: 'swt-win64', version: '3.4.2'
     compile group: 'org.json', name: 'json', version: '20171018'
     compile group: 'net.sf.supercsv', name: 'super-csv', version: '2.4.0'
+}
+
+task faJar(type: Jar){
+    manifest {
+        attributes(
+                'Main-Class': 'com.lev.accprog.ui.AccountingProgram'
+        )
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }

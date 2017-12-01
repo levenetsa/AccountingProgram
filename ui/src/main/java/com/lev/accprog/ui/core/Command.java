@@ -1,16 +1,17 @@
-package com.lev.accprog.ui;
+package com.lev.accprog.ui.core;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.json.JSONObject;
 
-class Command {
+import java.text.ParseException;
+
+public class Command {
 
     private Food mArgumentObject;
     private String mNameAndArgs;
     private String mCommandText;
     private int mSpaceIndex;
 
-    Command(String nameAndArgs) {
+    public Command(String nameAndArgs) {
         this.mNameAndArgs = nameAndArgs.trim();
         mSpaceIndex = mNameAndArgs.indexOf(" ");
         if (mSpaceIndex == -1) {
@@ -24,11 +25,11 @@ class Command {
         return mNameAndArgs.substring(mSpaceIndex + 1, mNameAndArgs.length()).trim();
     }
 
-    void prepareArgument() throws InvalidArgumentException {
+    private void prepareArgument() throws ParseException {
         mArgumentObject = castToFood(mNameAndArgs.substring(mSpaceIndex + 1, mNameAndArgs.length()).trim());
     }
 
-    private Food castToFood(String s) throws InvalidArgumentException {
+    private Food castToFood(String s) throws ParseException {
         JSONObject parser = new JSONObject(s);
         mArgumentObject = new Food();
         mArgumentObject.setDate(parser.getString("expirationDate"));
@@ -37,15 +38,12 @@ class Command {
         return mArgumentObject;
     }
 
-    public Food getArgumentObject() throws InvalidArgumentException {
+    Food getArgumentObject() throws ParseException {
         prepareArgument();
         return mArgumentObject;
     }
 
-    public String getmCommandText() {
+    String getCommandText() {
         return mCommandText;
-    }
-    String getNameAndArgs() {
-        return mNameAndArgs;
     }
 }

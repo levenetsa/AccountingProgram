@@ -1,30 +1,30 @@
-package com.lev.accprog.ui;
+package com.lev.accprog.ui.core;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.json.JSONException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-class QueueHolder {
+public class QueueHolder {
 
 private static final String HELP = "You should pass file name as argument for correct program execution!";
 
-    private PriorityQueue<Food> mQueue;
-
-    PriorityQueue<Food> getQueue() {
+    public PriorityQueue<Food> getQueue() {
         return mQueue;
     }
 
-    QueueHolder(PriorityQueue<Food> queue) {
+    private PriorityQueue<Food> mQueue;
+
+    public QueueHolder(PriorityQueue<Food> queue) {
         mQueue = queue;
     }
 
-    void handleCommand(Command command) {
+    public void handleCommand(Command command) {
         try {
             execute(command);
         } catch (NoSuchElementException e) {
@@ -33,15 +33,15 @@ private static final String HELP = "You should pass file name as argument for co
             System.out.println("Неверное количество аргументов");
         } catch (NoSuchMethodException e) {
             System.out.println("Нет такой команды");
-        } catch (InvalidArgumentException e) {
+        } catch (ParseException e) {
             System.out.println("так не делается, брат");
         } catch (IllegalArgumentException e) {
             System.out.println("ало , карыто");
         }
     }
 
-    private void execute(Command command) throws NoSuchMethodException, InvalidArgumentException {
-        switch (command.getmCommandText()) {
+    private void execute(Command command) throws NoSuchMethodException, ParseException {
+        switch (command.getCommandText()) {
             case "help":
                 show(HELP);
                 break;
@@ -180,7 +180,7 @@ private static final String HELP = "You should pass file name as argument for co
         //remove_all {"taste":"SWEET","expirationDate":"2017-05-15","name":"Apple"}
     }
 
-    void initShutdownHook() {
+    public void initShutdownHook() {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             String name = "data";
@@ -216,7 +216,7 @@ private static final String HELP = "You should pass file name as argument for co
         }, "Shutdown-thread"));
     }
 
-    void initListening() {
+    public void initListening() {
         System.out.println("Enter a command!");
         Scanner scanner = new Scanner(System.in);
         String line;
@@ -229,8 +229,11 @@ private static final String HELP = "You should pass file name as argument for co
         }
     }
 
-    public String show(String str) {
+    private void show(String str) {
         System.out.println(str);
-        return str;
+    }
+
+    public void add(Food food){
+        mQueue.add(food);
     }
 }
