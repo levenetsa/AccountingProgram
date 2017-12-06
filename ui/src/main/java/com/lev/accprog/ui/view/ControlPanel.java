@@ -6,6 +6,10 @@ import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,6 +24,7 @@ class ControlPanel extends Composite {
     private Text mDate;
     private Text mTaste;
     private TablePanel mTablePanel;
+
 
     ControlPanel(Composite parent, int style, TablePanel tablePanel) {
         super(parent, style);
@@ -112,7 +117,9 @@ class ControlPanel extends Composite {
         new CommonButton(parent, SWT.PUSH, "ADD IF MAX", () -> {
             Food food;
             try {
+
                 food = getFood();
+
             } catch (Exception exception) {
                 new InfoWindow(exception).open();
                 return;
@@ -124,6 +131,7 @@ class ControlPanel extends Composite {
 
     private void addCreateButton(Composite parent) {
         new CommonButton(parent, SWT.PUSH, "ADD", () -> {
+
             Food food;
             try {
                 food = getFood();

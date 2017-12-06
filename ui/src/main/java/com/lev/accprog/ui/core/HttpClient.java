@@ -2,9 +2,10 @@ package com.lev.accprog.ui.core;
 
 import java.net.*;
 import java.io.*;
+import java.nio.Buffer;
 
-public class Connect {
-    public static void main(String args[]) {
+public class HttpClient {
+    public static void main(String args[]) throws UnsupportedEncodingException {
         String mWord="Import";
         byte[] m=mWord.getBytes();
         int serverPort = 6666;
@@ -15,7 +16,7 @@ public class Connect {
             System.out.println( " and port " + serverPort + "?");
             Socket socket = new Socket("Localhost", serverPort); // create socket.
             System.out.println("Yes! I just got hold of the program.");
-            Sender sender-new Sender
+
 
             // Take input and output socets streams
             InputStream sin = socket.getInputStream();
@@ -25,15 +26,18 @@ public class Connect {
             DataInputStream in = new DataInputStream(sin);
             DataOutputStream out = new DataOutputStream(sout);
             BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-
             // Create stream and read from keyboard
             String line = "alo";
             System.out.println("Type in something and press enter. Will send it to the server and tell ya what it thinks.");
             System.out.println();
-            out.writeUTF(mWord);
-            mWord=in.readUTF();
-            out.flush();
+            byte[] as=new byte[1024];
+            int a;
             while (true) {
+                sout.write(m);
+                while((a=in.read())!=-1){
+                    System.out.println((char) a);
+                }
+
                 line = keyboard.readLine(); // wait when user write smdy
                 System.out.println("Sending this line to the server...");
                 out.writeUTF(line); // send line .

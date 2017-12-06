@@ -2,7 +2,7 @@ package com.lev.accprog.ui.core;
 
 import java.net.*;
 import java.io.*;
-public class DBConnector {
+public class ServerHttpClient {
     public static void main(String[] ar)    {
         int port = 6666; // port
         try {
@@ -12,30 +12,20 @@ public class DBConnector {
             Socket socket = ss.accept(); // talk server for wait client
             System.out.println("Got a client :) ... Finally, someone saw me through all the cover!");
             System.out.println();
-
             // Take input and output socets streams.
             InputStream sin = socket.getInputStream();
             OutputStream sout = socket.getOutputStream();
-
-            // Конвертируем потоки в другой тип, чтоб легче обрабатывать текстовые сообщения.
-            DataInputStream in = new DataInputStream(sin);
-            DataOutputStream out = new DataOutputStream(sout);
-
-            String line = "";
-            String mWord=null;
+            String mWord= "alo";
+            byte[] m=mWord.getBytes();
             while(true) {
-                mWord=in.readUTF();
-                out.writeUTF(mWord);
-                out.flush();
+                sin.read();
+                sout.write(m);
                 System.out.println("alo");
-                line = in.readUTF(); // wait client.
-                System.out.println("The dumb client just sent me this line : " + line);
-                System.out.println("I'm sending it back...");
-                out.writeUTF(line); // send line for client.
-                out.flush(); // end stream.
-                System.out.println("Waiting for the next line...");
-                System.out.println();
+
             }
         } catch(Exception x) { x.printStackTrace(); }
+    }
+    public void send(){
+
     }
 }
