@@ -4,7 +4,9 @@ import java.net.*;
 import java.io.*;
 
 public class DBClient {
-    public static void main(String[] ar) {
+    public static void main(String args[]) {
+        String mWord="Import";
+        byte[] m=mWord.getBytes();
         int serverPort = 6666;
 
 
@@ -21,13 +23,15 @@ public class DBClient {
             // Конвертируем потоки в другой тип, чтоб легче обрабатывать текстовые сообщения.
             DataInputStream in = new DataInputStream(sin);
             DataOutputStream out = new DataOutputStream(sout);
+            BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
             // Create stream and read from keyboard
-            BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-            String line = null;
+            String line = "alo";
             System.out.println("Type in something and press enter. Will send it to the server and tell ya what it thinks.");
             System.out.println();
-
+            out.writeUTF(mWord);
+            mWord=in.readUTF();
+            out.flush();
             while (true) {
                 line = keyboard.readLine(); // wait when user write smdy
                 System.out.println("Sending this line to the server...");
