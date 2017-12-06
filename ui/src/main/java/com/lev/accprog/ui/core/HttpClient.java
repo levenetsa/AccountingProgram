@@ -7,7 +7,7 @@ import java.nio.Buffer;
 public class HttpClient {
     public static void main(String args[]) throws UnsupportedEncodingException {
         String mWord="Import";
-        byte[] m=mWord.getBytes();
+        ;
         int serverPort = 6666;
 
 
@@ -23,36 +23,14 @@ public class HttpClient {
             OutputStream sout = socket.getOutputStream();
 
             // Конвертируем потоки в другой тип, чтоб легче обрабатывать текстовые сообщения.
-            DataInputStream in = new DataInputStream(sin);
+           DataInputStream in = new DataInputStream(sin);
             DataOutputStream out = new DataOutputStream(sout);
-            BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-            // Create stream and read from keyboard
-            String line = "alo";
-            System.out.println("Type in something and press enter. Will send it to the server and tell ya what it thinks.");
-            System.out.println();
-            byte[] as=new byte[1024];
-            int a;
-            while (true) {
-                sout.write(m);
-                while((a=in.read())!=-1){
-                    System.out.println((char) a);
-                }
-
-                line = keyboard.readLine(); // wait when user write smdy
-                System.out.println("Sending this line to the server...");
-                out.writeUTF(line); // send line .
-                out.flush(); // end send line.
-                line = in.readUTF(); // wait when server answer.
-                System.out.println("The server was very polite. It sent me this : " + line);
-                System.out.println("Looks like the server is pleased with us. Go ahead and enter more lines.");
-                System.out.println();
-                if(line.equals("collection")){
-                    System.out.println("collectionfsadsa");
-                }
-
-
-            }
-
+         
+                out.write(mWord.getBytes());
+                byte buf[]=new byte[64*1024];
+                int r=in.read(buf);
+                String data=new String(buf,0,r);
+                System.out.println(data);
         } catch (Exception x) {
             x.printStackTrace();
 

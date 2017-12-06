@@ -15,14 +15,15 @@ public class ServerHttpClient {
             // Take input and output socets streams.
             InputStream sin = socket.getInputStream();
             OutputStream sout = socket.getOutputStream();
-            String mWord= "alo";
-            byte[] m=mWord.getBytes();
-            while(true) {
-                sin.read();
-                sout.write(m);
-                System.out.println("alo");
+            DataInputStream in = new DataInputStream(sin);
+            DataOutputStream out = new DataOutputStream(sout);
+             while(true)   {
+                 byte buf[]=new byte[64*1024];
+                 int r=in.read(buf);
+                 String data=new String(buf,0,r);
+                 out.write(data.getBytes());
+             }
 
-            }
         } catch(Exception x) { x.printStackTrace(); }
     }
     public void send(){
