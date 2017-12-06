@@ -3,7 +3,7 @@ package com.lev.accprog.ui.core;
 import java.net.*;
 import java.io.*;
 
-public class DBClient {
+public class Connect {
     public static void main(String args[]) {
         String mWord="Import";
         byte[] m=mWord.getBytes();
@@ -15,6 +15,7 @@ public class DBClient {
             System.out.println( " and port " + serverPort + "?");
             Socket socket = new Socket("Localhost", serverPort); // create socket.
             System.out.println("Yes! I just got hold of the program.");
+            Sender sender-new Sender
 
             // Take input and output socets streams
             InputStream sin = socket.getInputStream();

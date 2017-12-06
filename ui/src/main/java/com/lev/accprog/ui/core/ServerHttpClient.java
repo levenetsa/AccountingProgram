@@ -21,8 +21,13 @@ public class DBConnector {
             DataInputStream in = new DataInputStream(sin);
             DataOutputStream out = new DataOutputStream(sout);
 
-            String line = null;
+            String line = "";
+            String mWord=null;
             while(true) {
+                mWord=in.readUTF();
+                out.writeUTF(mWord);
+                out.flush();
+                System.out.println("alo");
                 line = in.readUTF(); // wait client.
                 System.out.println("The dumb client just sent me this line : " + line);
                 System.out.println("I'm sending it back...");
