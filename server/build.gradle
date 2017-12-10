@@ -1,6 +1,10 @@
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
+apply plugin: 'application'
+
+
+mainClassName = 'com.lev.accprog.server.Server'
+
 
 sourceCompatibility = 1.8
 
@@ -15,3 +19,14 @@ dependencies {
     compile group: 'net.sf.supercsv', name: 'super-csv', version: '2.4.0'
 }
 
+
+task faJar(type: Jar){
+    manifest {
+        attributes(
+                'Main-Class': 'com.lev.accprog.server.Server'
+        )
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

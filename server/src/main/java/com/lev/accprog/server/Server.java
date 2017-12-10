@@ -46,11 +46,9 @@ public class Server {
         }
 
         public void run() {
-            QueueHolder queueHolder = null;
             try {
                 mInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 mOutput = new PrintWriter(socket.getOutputStream(), true);
-                queueHolder = new QueueHolder();
                 while (true) {
                     if (!socket.isClosed()) {
                         String input = mInput.readLine();
@@ -58,6 +56,8 @@ public class Server {
                             return;
                         }
                         log("Received message: " + input);
+                        QueueHolder queueHolder = new QueueHolder();
+                        queueHolder.handleCommand(new Command("import"));
                         queueHolder.handleCommand(new Command(input));
                         JSONArray array = new JSONArray(queueHolder.getQueue()
                                 .stream().map(FoodX::new).collect(Collectors.toList()));

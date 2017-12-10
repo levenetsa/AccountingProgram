@@ -101,7 +101,7 @@ class ControlPanel extends Composite {
         filters[1].setSelection(true);
         filters[2] = new Button(panel, SWT.CHECK);
         filters[2].setText("Date");
-        new CommonButton(panel, SWT.PUSH, "CLEAR FILTER", () -> mTablePanel.load());
+        new CommonButton(panel, SWT.PUSH, "REFRESH", () -> mTablePanel.load());
     }
 
     private void addRemoveButton(Composite parent) {

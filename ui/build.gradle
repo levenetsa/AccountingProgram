@@ -1,7 +1,7 @@
 apply plugin: 'application'
 
 
-mainClassName = 'com.lev.accprog.ui.Main'
+mainClassName = 'com.lev.accprog.server.Server'
 
 sourceCompatibility = 1.8
 
