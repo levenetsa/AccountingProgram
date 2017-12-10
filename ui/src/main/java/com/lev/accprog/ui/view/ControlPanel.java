@@ -139,15 +139,13 @@ class ControlPanel extends Composite {
     }
 
     private void removeAllLikeButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, "REMOVE ALL", () -> {
-            new ConfirmWindow((s,d) -> {
-                try {
-                    mTablePanel.deleteAllLike(getFood());
-                } catch (ParseException e) {
-                    new InfoWindow(e).open();
-                }
-            });
-        });
+        new CommonButton(parent, SWT.PUSH, "REMOVE ALL", () -> new ConfirmWindow((s, d) -> {
+            try {
+                mTablePanel.deleteAllLike(getFood());
+            } catch (ParseException e) {
+                new InfoWindow(e).open();
+            }
+        }).open());
     }
 
     private void removeGreaterButton(Composite parent) {

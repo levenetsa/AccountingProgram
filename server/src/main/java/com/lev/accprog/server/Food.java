@@ -80,7 +80,9 @@ public class Food implements Comparable<Food> {
 
     @Override
     public String toString() {
+
         JSONObject object = new JSONObject(this);
+
         return object.toString();
     }
 }

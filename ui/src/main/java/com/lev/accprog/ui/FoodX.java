@@ -1,4 +1,4 @@
-package com.lev.accprog.server;
+package com.lev.accprog.ui;
 
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;

@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Shell;
 
 class ConfirmWindow {
 
-    private final Shell mConfirmShell;
+    private Shell mConfirmShell;
     private final ConfirmCallback mCallback;
 
     ConfirmWindow(ConfirmCallback callback) {
@@ -18,6 +18,9 @@ class ConfirmWindow {
         RowLayout layout = new RowLayout();
         layout.justify = true;
         layout.marginTop = 17;
+        if (mConfirmShell.isDisposed()){
+            mConfirmShell = new Shell();
+        }
         mConfirmShell.setLayout(layout);
         mConfirmShell.setText("Are you sure?");
         addOk(mConfirmShell);

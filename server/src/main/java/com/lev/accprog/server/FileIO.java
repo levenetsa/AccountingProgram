@@ -14,6 +14,7 @@ class FileIO {
             if (line.equals("")) continue;
             readed.add(parseFood(line));
         }
+        scanner.close();
         return readed;
     }
 
@@ -33,25 +34,26 @@ class FileIO {
 
     void writeQueue(PriorityQueue<Food> queue, String path){
         BufferedWriter bw = null;
-        StringBuilder mycontent = new StringBuilder();
+        StringBuilder myContent = new StringBuilder();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        while (!queue.isEmpty()) {
-            String date = df.format(queue.peek().getExpirationDate().getTime());
-            String name = queue.peek().getName();
-            String taste = queue.peek().getTaste().toString();
-            mycontent.append(date).append(", ").append(name).append(", ").append(taste).append("\r\n");
-            queue.poll();
+        for (Food foo : queue){
+            String date = df.format(foo.getExpirationDate().getTime());
+            String name = foo.getName();
+            String taste = foo.getTaste().toString();
+            myContent.append(date).append(", ").append(name).append(", ").append(taste).append("\r\n");
         }
         try {
             File file = new File(path);
 
             if (!file.exists()) {
                 file.createNewFile();
+            } else {
+                file.delete();
+                file.createNewFile();
             }
-
             FileWriter fw = new FileWriter(file);
             bw = new BufferedWriter(fw);
-            bw.write(mycontent.toString());
+            bw.write(myContent.toString());
             System.out.println("Data saved to " + file.getName());
 
         } catch (IOException ioe) {

@@ -1,6 +1,7 @@
 package com.lev.accprog.ui.controller;
 
 import com.lev.accprog.ui.Food;
+import com.lev.accprog.ui.FoodX;
 import com.lev.accprog.ui.HttpClient;
 import com.lev.accprog.ui.view.ConfirmCallback;
 import org.json.JSONArray;
@@ -19,7 +20,9 @@ public class QueueController {
         mHttpClient = new HttpClient();
     }
 
-    public void handleCommand(String s, ConfirmCallback callback) {
+    public void handleCommand(String s, Food food, ConfirmCallback callback) {
+        if (food != null)
+            s += " " + new JSONObject(new FoodX(food)).toString();
         String message = s;
         System.out.println(message);
         mHttpClient.write(message);

@@ -101,26 +101,26 @@ class TablePanel extends Composite {
     }
 
     public void load(){
-        mQueueController.handleCommand("import", (s, d) -> addTableContents(d));
+        mQueueController.handleCommand("import",null, (s, d) -> addTableContents(d));
     }
 
     void delete() {
         if (mTable.getSelectionIndex() == -1) return;
-        mQueueController.handleCommand("remove " + mFoods.get(mTable.getSelectionIndex()).toString(),
+        mQueueController.handleCommand("remove", mFoods.get(mTable.getSelectionIndex()),
                 (s, d) -> reset(d));
     }
 
     void deleteAllLike(Food food) {
-        mQueueController.handleCommand("remove_all " + food.toString(),
+        mQueueController.handleCommand("remove_all", food,
                 (s, d) ->  reset(d));
     }
 
     void addIfMax(Food food){
-        mQueueController.handleCommand("add_if_max " + food.toString(), (s, d) ->  reset(d));
+        mQueueController.handleCommand("add_if_max", food, (s, d) ->  reset(d));
     }
 
     void add(Food food){
-        mQueueController.handleCommand("add " + food.toString(), (s, d) ->  reset(d));
+        mQueueController.handleCommand("add", food , (s, d) ->  reset(d));
     }
 
     void filter(Predicate<Food> filter) {
@@ -142,7 +142,7 @@ class TablePanel extends Composite {
     }
 
     void removeGreater(Food food) {
-        mQueueController.handleCommand("remove_greater " + food.toString(),
+        mQueueController.handleCommand("remove_greater", food,
                 (s, d) ->  reset(d));
     }
 }

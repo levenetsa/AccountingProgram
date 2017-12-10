@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import java.util.Scanner;
@@ -51,6 +52,9 @@ private static final String HELP = "You should pass file name as argument for co
                 break;
 
             case "import":
+                if (mQueue != null){
+                    mQueue.retainAll(Collections.emptyList());
+                }
                 loadDataFrom("data.txt");
                 break;
 
@@ -148,8 +152,8 @@ private static final String HELP = "You should pass file name as argument for co
      */
 
     public void removeGreater(Food food) {
-        while (!mQueue.isEmpty() && mQueue.poll().getExpirationDate().compareTo(food.getExpirationDate()) < 0) {
-            mQueue.peek();
+        while (!mQueue.isEmpty() && mQueue.peek().getExpirationDate().compareTo(food.getExpirationDate()) > 0) {
+            mQueue.poll();
         }
 
     }
@@ -170,7 +174,7 @@ private static final String HELP = "You should pass file name as argument for co
      */
 
     public void addIfMax(Food food) {
-        if (mQueue.peek().compareTo(food) > 0)
+        if (!mQueue.isEmpty() && mQueue.peek().compareTo(food) > 0)
             mQueue.add(food);
         System.out.println("Done");
         //add_if_max {"taste":"SWEET","expirationDate":"2017-05-21","name":"Apple"}

@@ -1,6 +1,5 @@
 package com.lev.accprog.server;
 
-import netscape.javascript.JSObject;
 import org.json.JSONArray;
 
 import java.io.BufferedReader;
@@ -11,7 +10,6 @@ import java.lang.invoke.MethodHandles;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
-import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
 public class Server {
@@ -48,9 +46,11 @@ public class Server {
         }
 
         public void run() {
+            QueueHolder queueHolder = null;
             try {
                 mInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 mOutput = new PrintWriter(socket.getOutputStream(), true);
+                queueHolder = new QueueHolder();
                 while (true) {
                     if (!socket.isClosed()) {
                         String input = mInput.readLine();
@@ -58,12 +58,13 @@ public class Server {
                             return;
                         }
                         log("Received message: " + input);
-                        QueueHolder queueHolder = new QueueHolder();
                         queueHolder.handleCommand(new Command(input));
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-                        JSONArray array = new JSONArray(queueHolder.getQueue().stream().map(x -> new FoodX(x, formatter)
-                        ).collect(Collectors.toList()));
-                        mOutput.println(array.toString());
+                        JSONArray array = new JSONArray(queueHolder.getQueue()
+                                .stream().map(FoodX::new).collect(Collectors.toList()));
+                        String a = array.toString();
+                        System.out.println(a);
+                        mOutput.println(a);
+                        queueHolder.handleCommand(new Command("put data.txt"));
                     }
                 }
             } catch (IOException e) {

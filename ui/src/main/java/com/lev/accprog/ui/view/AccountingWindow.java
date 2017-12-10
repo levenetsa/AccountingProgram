@@ -35,7 +35,7 @@ public class AccountingWindow {
             if (!mDisplay.readAndDispatch())
                 mDisplay.sleep();
         }
-        mDisplay.dispose();
+        //mDisplay.dispose();
     }
 
 
@@ -60,7 +60,7 @@ public class AccountingWindow {
         fileInfoItem.setText("Info");
         fileInfoItem.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-                mQueueController.handleCommand("info", (info, newData)
+                mQueueController.handleCommand("info", null, (info, newData)
                         -> new InfoWindow("Information", info).open());
             }
 
