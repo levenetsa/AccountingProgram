@@ -18,6 +18,12 @@ public class Food implements Comparable<Food> {
         this.expirationDate = new GregorianCalendar(2000, 1, 1);
     }
 
+    public Food(String name, String taste, String date) throws ParseException {
+        this.name = name;
+        this.taste = TASTE.valueOf(taste);
+        this.setDate(date);
+    }
+
     public void setDate(int year, int month, int day) {
         month--;
         this.expirationDate = new GregorianCalendar(year, month, day);

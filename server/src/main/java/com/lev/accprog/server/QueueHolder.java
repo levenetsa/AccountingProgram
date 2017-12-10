@@ -5,11 +5,9 @@ import org.json.JSONException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.util.*;
 
 public class QueueHolder {
 
@@ -123,10 +121,13 @@ private static final String HELP = "You should pass file name as argument for co
     private void loadDataFrom(String s) {
         FileIO writter = new FileIO();
         try {
-            mQueue.addAll(writter.readQueue(s));
+            FoodDAO dao = new FoodDAO();
+            mQueue.addAll(dao.getFood());
             System.out.println("Data loaded from " + s);
-        } catch (FileNotFoundException e) {
-            System.out.println("Can't find file!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -135,8 +136,16 @@ private static final String HELP = "You should pass file name as argument for co
      * @param fileName аргумент в строковом формате
      */
     private void putDataTo(String fileName) {
-        FileIO writer = new FileIO();
-        writer.writeQueue(mQueue, fileName);
+        FoodDAO dao = new FoodDAO();
+        try {
+            dao.saveFood(new ArrayList<>(mQueue));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        //FileIO writer = new FileIO();
+        //writer.writeQueue(mQueue, fileName);
     }
 
     /**
