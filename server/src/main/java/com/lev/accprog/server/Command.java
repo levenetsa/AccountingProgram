@@ -1,4 +1,4 @@
-package com.lev.accprog.ui.core;
+package com.lev.accprog.server;
 
 import org.json.JSONObject;
 
@@ -34,7 +34,7 @@ public class Command {
         mArgumentObject = new Food();
         mArgumentObject.setDate(parser.getString("expirationDate"));
         mArgumentObject.setName(parser.getString("name"));
-        mArgumentObject.setTaste(parser.getString("taste"));
+        mArgumentObject.setTaste(Food.TASTE.valueOf(parser.getString("taste")));
         return mArgumentObject;
     }
 

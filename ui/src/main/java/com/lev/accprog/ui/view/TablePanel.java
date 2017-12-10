@@ -1,7 +1,7 @@
 package com.lev.accprog.ui.view;
 
-import com.lev.accprog.ui.core.Food;
-import com.lev.accprog.ui.core.QueueHolder;
+import com.lev.accprog.ui.Food;
+import com.lev.accprog.ui.controller.QueueController;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -19,12 +19,12 @@ class TablePanel extends Composite {
 
     private List<Food> mFoods;
     private Table mTable;
-    private QueueHolder mQueueHolder;
+    private QueueController mQueueController;
 
-    TablePanel(Composite parent, int style, QueueHolder queueHolder) {
+    TablePanel(Composite parent, int style, QueueController queueController) {
         super(parent, style);
         mFoods = new ArrayList<>();
-        mQueueHolder = queueHolder;
+        mQueueController = queueController;
         this.setLayout(new RowLayout(SWT.VERTICAL));
         createTable();
         Composite sortButtons = new Composite(this, SWT.NONE);
@@ -74,7 +74,7 @@ class TablePanel extends Composite {
         createTableColumn(mTable, SWT.LEFT, "Name", 86);
         createTableColumn(mTable, SWT.CENTER, "Taste", 85);
         createTableColumn(mTable, SWT.RIGHT, "Date", 100);
-        addTableContents(mQueueHolder.getQueue());
+        load();
     }
 
     private void createTableColumn
@@ -85,11 +85,11 @@ class TablePanel extends Composite {
         tc.setWidth(width);
     }
 
-    private void addTableContents(PriorityQueue<Food> queue) {
+    private void addTableContents(List<Food> queue) {
+        mFoods = queue;
+        mTable.removeAll();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        mFoods = new ArrayList<>();
         for (Food food : queue) {
-            mFoods.add(food);
             String[] row = new String[]{
                     food.getName(),
                     String.valueOf(food.getTaste()),
@@ -100,28 +100,27 @@ class TablePanel extends Composite {
         }
     }
 
-    private void addTableContents(List<Food> queue) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        for (Food food : queue) {
-            String[] row = new String[]{
-                    food.getName(),
-                    String.valueOf(food.getTaste()),
-                    formatter.format(food.getExpirationDate().getTime())
-            };
-            TableItem ti = new TableItem(mTable, SWT.NONE);
-            ti.setText(row);
-        }
+    public void load(){
+        mQueueController.handleCommand("import", (s, d) -> addTableContents(d));
     }
 
     void delete() {
         if (mTable.getSelectionIndex() == -1) return;
-        mQueueHolder.getQueue().remove(mFoods.get(mTable.getSelectionIndex()));
-        reset();
+        mQueueController.handleCommand("remove " + mFoods.get(mTable.getSelectionIndex()).toString(),
+                (s, d) -> reset(d));
     }
 
-    void deleteAllLike(Food food){
-        mQueueHolder.removeAll(food);
-        reset();
+    void deleteAllLike(Food food) {
+        mQueueController.handleCommand("remove_all " + food.toString(),
+                (s, d) ->  reset(d));
+    }
+
+    void addIfMax(Food food){
+        mQueueController.handleCommand("add_if_max " + food.toString(), (s, d) ->  reset(d));
+    }
+
+    void add(Food food){
+        mQueueController.handleCommand("add " + food.toString(), (s, d) ->  reset(d));
     }
 
     void filter(Predicate<Food> filter) {
@@ -130,9 +129,9 @@ class TablePanel extends Composite {
         addTableContents(mFoods);
     }
 
-    void reset() {
+    void reset(List<Food> d) {
         mTable.removeAll();
-        addTableContents(mQueueHolder.getQueue());
+        addTableContents(d);
     }
 
     private RowData rowData() {
@@ -142,12 +141,8 @@ class TablePanel extends Composite {
         return setSizer;
     }
 
-    QueueHolder getQueueHolder() {
-        return mQueueHolder;
-    }
-
     void removeGreater(Food food) {
-        mQueueHolder.removeGreater(food);
-        reset();
+        mQueueController.handleCommand("remove_greater " + food.toString(),
+                (s, d) ->  reset(d));
     }
 }

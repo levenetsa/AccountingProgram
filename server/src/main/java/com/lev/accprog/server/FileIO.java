@@ -1,4 +1,4 @@
-package com.lev.accprog.ui.core;
+package com.lev.accprog.server;
 
 import java.io.*;
 import java.text.SimpleDateFormat;

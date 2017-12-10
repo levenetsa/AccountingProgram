@@ -1,6 +1,6 @@
 package com.lev.accprog.ui.view;
 
-import com.lev.accprog.ui.core.QueueHolder;
+import com.lev.accprog.ui.controller.QueueController;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -12,20 +12,20 @@ public class AccountingWindow {
     private final String LABEL_MAIN = "Collection program";
 
     private Display mDisplay = new Display();
-    private QueueHolder mQueueHolder;
+    private QueueController mQueueController;
     private TablePanel mTablePanel;
     private Shell mMainShell = new Shell(mDisplay);
     private ControlPanel mControlPanel;
 
-    public AccountingWindow(QueueHolder queueHolder) {
-        mQueueHolder = queueHolder;
+    public AccountingWindow(QueueController queueController) {
+        mQueueController = queueController;
     }
 
     public void run() {
         RowLayout layout = new RowLayout();
         mMainShell.setText(LABEL_MAIN);
         mMainShell.setLayout(layout);
-        mTablePanel = new TablePanel(mMainShell, SWT.NONE, mQueueHolder);
+        mTablePanel = new TablePanel(mMainShell, SWT.NONE, mQueueController);
         mControlPanel = new ControlPanel(mMainShell, SWT.NONE, mTablePanel);
         setUpMenuBar();
         mMainShell.addListener(SWT.Close, event -> System.exit(0));
@@ -52,6 +52,7 @@ public class AccountingWindow {
                 new InfoWindow("HELP",
                         "Tutorial how to use my programm ...PLS WRITE CORRECT 'DATA YYYY-MM-DD'").open();
             }
+
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
@@ -59,8 +60,10 @@ public class AccountingWindow {
         fileInfoItem.setText("Info");
         fileInfoItem.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-                new InfoWindow("Information", mQueueHolder.printInfo()).open();
+                mQueueController.handleCommand("info", (info, newData)
+                        -> new InfoWindow("Information", info).open());
             }
+
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         });

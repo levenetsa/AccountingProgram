@@ -1,35 +1,17 @@
 package com.lev.accprog.ui.view;
 
-import com.lev.accprog.ui.core.Food;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Shell;
 
 class ConfirmWindow {
 
-    private final TablePanel mTablePanel;
     private final Shell mConfirmShell;
-    private final BEHAVIOR mBehavior;
-    private final Food mFood;
+    private final ConfirmCallback mCallback;
 
-    enum BEHAVIOR {
-        DELETE_ALL_LIKE,
-        DELETE_SINGLE,
-        REMOVE_GREATER
-    }
-
-    ConfirmWindow(final TablePanel tablePanel, BEHAVIOR behavior) {
+    ConfirmWindow(ConfirmCallback callback) {
         mConfirmShell = new Shell();
-        mTablePanel = tablePanel;
-        mBehavior = behavior;
-        mFood = null;
-    }
-
-    ConfirmWindow(final TablePanel tablePanel, BEHAVIOR behavior, Food food) {
-        mConfirmShell = new Shell();
-        mTablePanel = tablePanel;
-        mBehavior = behavior;
-        mFood = food;
+        mCallback = callback;
     }
 
     void open() {
@@ -46,16 +28,8 @@ class ConfirmWindow {
 
     private void addOk(Shell shell) {
         new CommonButton(shell, SWT.PUSH, "Ok", () -> {
-            switch (mBehavior) {
-                case DELETE_ALL_LIKE:
-                    mTablePanel.deleteAllLike(mFood);
-                case REMOVE_GREATER:
-                    mTablePanel.removeGreater(mFood);
-                case DELETE_SINGLE:
-                    mTablePanel.delete();
-                default:
-                    shell.dispose();
-            }
+            mCallback.onConfirm(null, null);
+            shell.dispose();
         });
     }
 

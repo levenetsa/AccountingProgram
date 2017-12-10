@@ -1,4 +1,4 @@
-package com.lev.accprog.ui.core;
+package com.lev.accprog.server;
 
 import org.json.JSONException;
 
@@ -20,8 +20,8 @@ private static final String HELP = "You should pass file name as argument for co
 
     private PriorityQueue<Food> mQueue;
 
-    public QueueHolder(PriorityQueue<Food> queue) {
-        mQueue = queue;
+    public QueueHolder() {
+        mQueue = new PriorityQueue<>();
     }
 
     public void handleCommand(Command command) {
@@ -51,11 +51,15 @@ private static final String HELP = "You should pass file name as argument for co
                 break;
 
             case "import":
-                loadDataFrom(command.getArgumentAsText());
+                loadDataFrom("data.txt");
                 break;
 
             case "put":
                 putDataTo(command.getArgumentAsText());
+                break;
+
+            case "remove":
+                mQueue.remove(command.getArgumentObject());
                 break;
 
             case "remove_all":
@@ -63,6 +67,14 @@ private static final String HELP = "You should pass file name as argument for co
                     removeAll(command.getArgumentObject());
                 } catch (JSONException e) {
                     System.out.println("Не правильный формат команды");
+                }
+                break;
+
+            case "add":
+                try {
+                    mQueue.add(command.getArgumentObject());
+                } catch (JSONException e) {
+                    System.out.println("не правильный формат команды");
                 }
                 break;
 

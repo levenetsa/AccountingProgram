@@ -6,7 +6,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-class InfoWindow {
+public class InfoWindow {
 
     private final Shell mShell;
 
@@ -28,7 +28,7 @@ class InfoWindow {
         mShell.setSize(500, 100);
     }
 
-    InfoWindow(String title, String content){
+    public InfoWindow(String title, String content){
         mShell = new Shell();
         RowLayout layout = new RowLayout();
         layout.justify = true;
@@ -41,7 +41,7 @@ class InfoWindow {
         new CommonButton(mShell, SWT.PUSH,"Cancel", mShell::close);
     }
 
-    void open() {
+    public void open() {
         mShell.open();
     }
 }

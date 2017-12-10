@@ -1,15 +1,11 @@
 package com.lev.accprog.ui.view;
 
-import com.lev.accprog.ui.core.Food;
+import com.lev.accprog.ui.Food;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -61,11 +57,6 @@ class ControlPanel extends Composite {
         addFilters(parent);
     }
 
-    private void addRemoveButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, "REMOVE", () ->
-                new ConfirmWindow(mTablePanel, ConfirmWindow.BEHAVIOR.DELETE_SINGLE).open());
-    }
-
     private void addFilters(Composite parent) {
         Composite panel = new Composite(parent, SWT.NONE);
         panel.setLayout(new RowLayout(SWT.VERTICAL));
@@ -110,7 +101,12 @@ class ControlPanel extends Composite {
         filters[1].setSelection(true);
         filters[2] = new Button(panel, SWT.CHECK);
         filters[2].setText("Date");
-        new CommonButton(panel, SWT.PUSH, "CLEAR FILTER", () -> mTablePanel.reset());
+        new CommonButton(panel, SWT.PUSH, "CLEAR FILTER", () -> mTablePanel.load());
+    }
+
+    private void addRemoveButton(Composite parent) {
+        new CommonButton(parent, SWT.PUSH, "REMOVE", () ->
+                new ConfirmWindow((s,d) -> mTablePanel.delete()).open());
     }
 
     private void addIfMaxButton(Composite parent) {
@@ -124,8 +120,7 @@ class ControlPanel extends Composite {
                 new InfoWindow(exception).open();
                 return;
             }
-            mTablePanel.getQueueHolder().addIfMax(food);
-            mTablePanel.reset();
+            mTablePanel.addIfMax(food);
         });
     }
 
@@ -139,29 +134,30 @@ class ControlPanel extends Composite {
                 new InfoWindow(ex).open();
                 return;
             }
-            mTablePanel.getQueueHolder().add(food);
-            mTablePanel.reset();
+            mTablePanel.add(food);
         });
     }
 
     private void removeAllLikeButton(Composite parent) {
         new CommonButton(parent, SWT.PUSH, "REMOVE ALL", () -> {
-            try {
-                new ConfirmWindow(mTablePanel, ConfirmWindow.BEHAVIOR.DELETE_ALL_LIKE, getFood());
-            } catch (Exception ex) {
-                new InfoWindow(ex).open();
-            }
+            new ConfirmWindow((s,d) -> {
+                try {
+                    mTablePanel.deleteAllLike(getFood());
+                } catch (ParseException e) {
+                    new InfoWindow(e).open();
+                }
+            });
         });
     }
 
     private void removeGreaterButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, "REM.GREATER", () -> {
+        new CommonButton(parent, SWT.PUSH, "REM.GREATER", new ConfirmWindow((s,d) -> {
             try {
-                new ConfirmWindow(mTablePanel, ConfirmWindow.BEHAVIOR.REMOVE_GREATER, getFood()).open();
-            } catch (Exception ex) {
+                mTablePanel.removeGreater(getFood());
+            } catch (ParseException ex) {
                 new InfoWindow(ex).open();
             }
-        });
+        })::open);
     }
 
     private Food getFood() throws ParseException {

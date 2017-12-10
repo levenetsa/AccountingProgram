@@ -1,0 +1,39 @@
+package com.lev.accprog.server;
+
+import java.text.SimpleDateFormat;
+
+public class FoodX {
+    private Food.TASTE taste;
+    private String expirationDate;
+    private String name;
+
+    public FoodX(Food x, SimpleDateFormat formatter) {
+        setName(x.getName());
+        setTaste(x.getTaste());
+        setExpirationDate(formatter.format(x.getExpirationDate().getTime()));
+    }
+
+    public Food.TASTE getTaste() {
+        return taste;
+    }
+
+    public void setTaste(Food.TASTE taste) {
+        this.taste = taste;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}

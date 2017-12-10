@@ -2,10 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="AccountingProgram-db_main" target="1.8" />
-      <module name="AccountingProgram-db_test" target="1.8" />
-      <module name="accprog_main" target="1.8" />
-      <module name="accprog_test" target="1.8" />
+      <module name="server_main" target="1.8" />
+      <module name="server_test" target="1.8" />
       <module name="ui_main" target="1.8" />
       <module name="ui_test" target="1.8" />
     </bytecodeTargetLevel>

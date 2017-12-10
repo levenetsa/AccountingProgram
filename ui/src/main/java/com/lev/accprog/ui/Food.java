@@ -1,4 +1,6 @@
-package com.lev.accprog.ui.core;
+package com.lev.accprog.ui;
+
+import org.json.JSONObject;
 
 import java.lang.Object;
 import java.text.ParseException;
@@ -17,7 +19,7 @@ public class Food implements Comparable<Food> {
         this.expirationDate = new GregorianCalendar(2000, 1, 1);
     }
 
-    void setDate(int year, int month, int day) {
+    public void setDate(int year, int month, int day) {
         month--;
         this.expirationDate = new GregorianCalendar(year, month, day);
     }
@@ -41,7 +43,7 @@ public class Food implements Comparable<Food> {
         return taste;
     }
 
-    void setTaste(String taste) throws IllegalArgumentException {
+    public void setTaste(String taste) throws IllegalArgumentException {
         this.taste = TASTE.valueOf(taste);
     }
 
@@ -79,26 +81,7 @@ public class Food implements Comparable<Food> {
 
     @Override
     public String toString() {
-        String response = "{";
-        if (this.name == null) {
-            response += "null";
-        } else {
-            response += name;
-        }
-        response += ":";
-        if (this.taste == null) {
-            response += "null";
-        } else {
-            response += taste;
-        }
-        response += ":";
-        if (this.expirationDate == null) {
-            response += "null";
-        } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = expirationDate.getTime();
-            response += sdf.format(date);
-        }
-        return response + "}";
+        JSONObject object = new JSONObject(this);
+        return object.toString();
     }
 }
