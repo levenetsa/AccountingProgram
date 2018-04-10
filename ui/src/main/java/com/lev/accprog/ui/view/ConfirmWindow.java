@@ -4,13 +4,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Shell;
 
+import static org.eclipse.swt.SWT.APPLICATION_MODAL;
+import static org.eclipse.swt.SWT.BORDER;
+import static org.eclipse.swt.SWT.CLOSE;
+
 class ConfirmWindow {
 
     private Shell mConfirmShell;
     private final ConfirmCallback mCallback;
 
     ConfirmWindow(ConfirmCallback callback) {
-        mConfirmShell = new Shell();
+        mConfirmShell = new Shell(APPLICATION_MODAL | BORDER | CLOSE);
         mCallback = callback;
     }
 

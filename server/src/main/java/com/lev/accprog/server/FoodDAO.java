@@ -42,7 +42,6 @@ public class FoodDAO {
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM food");
-            //SELECT array_to_json(array_agg(row_to_json(food))) FROM food;
             while (rs.next()) {
                 try {
                     Food food = new Food(rs.getString(1), rs.getString(2), rs.getString(3));
@@ -60,9 +59,9 @@ public class FoodDAO {
 
     private Connection initConnection() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql://localhost:5432/laba5";
+        String url = "jdbc:postgresql://localhost:5432/laba";
         String login = "postgres";
-        String password = "240595";
+        String password = "Iamken4o";
         return DriverManager.getConnection(url, login, password);
     }
 }

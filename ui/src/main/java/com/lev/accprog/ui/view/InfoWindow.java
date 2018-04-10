@@ -6,6 +6,9 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Text;
+import static org.eclipse.swt.SWT.*;
+
 public class InfoWindow {
 
     private final Shell mShell;
@@ -18,7 +21,7 @@ public class InfoWindow {
      * */
 
     InfoWindow(final Exception e) {
-        mShell = new Shell();
+        mShell = new Shell(APPLICATION_MODAL | BORDER | CLOSE);
         RowLayout layout = new RowLayout();
         layout.justify = true;
         layout.marginTop = 17;

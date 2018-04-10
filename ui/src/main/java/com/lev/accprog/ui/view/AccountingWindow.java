@@ -30,7 +30,7 @@ public class AccountingWindow {
         setUpMenuBar();
         mMainShell.addListener(SWT.Close, event -> System.exit(0));
         mMainShell.open();
-        mMainShell.setSize(670, 300);
+        mMainShell.setSize(680, 300);
         while (!mMainShell.isDisposed()) {
             if (!mDisplay.readAndDispatch())
                 mDisplay.sleep();
@@ -68,6 +68,28 @@ public class AccountingWindow {
             }
         });
         mMainShell.setMenuBar(menuBar);
+    }
+    private void lala(){
+        Shell shell=new Shell(mDisplay);
+        shell.open();
+        Text Login=new Text(shell,SWT.BORDER | SWT.CENTER);
+        Text Password=new Text(shell,SWT.BORDER | SWT.CENTER);
+        Button button=new Button(shell,SWT.PUSH);
+        button.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+
+            }
+        });
+        while (!shell.isDisposed()) {
+            if (!mDisplay.readAndDispatch())
+                mDisplay.sleep();
+        }
     }
 
 }

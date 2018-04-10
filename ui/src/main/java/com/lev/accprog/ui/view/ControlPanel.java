@@ -1,29 +1,32 @@
-package com.lev.accprog.ui.view;
 
-import com.lev.accprog.ui.Food;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.*;
+        package com.lev.accprog.ui.view;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.function.Predicate;
+        import com.lev.accprog.ui.Food;
+        import org.eclipse.swt.SWT;
+        import org.eclipse.swt.layout.RowData;
+        import org.eclipse.swt.layout.RowLayout;
+        import org.eclipse.swt.widgets.*;
+
+        import java.text.ParseException;
+        import java.text.SimpleDateFormat;
+        import java.util.Calendar;
+        import java.util.Date;
+        import java.util.GregorianCalendar;
+        import java.util.function.Predicate;
 
 
 class ControlPanel extends Composite {
 
     private Text mName;
     private Text mDate;
-    private Text mTaste;
+    private Combo mTaste;
     private TablePanel mTablePanel;
+    private Shell mParent;
+    private String Items[]={"SWEET","SPICY","SALTY"};
 
-
-    ControlPanel(Composite parent, int style, TablePanel tablePanel) {
+    ControlPanel(Shell parent, int style, TablePanel tablePanel) {
         super(parent, style);
+        mParent = parent;
         mTablePanel = tablePanel;
         this.setLayout(new RowLayout(SWT.VERTICAL));
         addTextFields();
@@ -35,7 +38,8 @@ class ControlPanel extends Composite {
         parent.setLayout(new RowLayout());
         mName = new Text(parent, SWT.BORDER);
         mName.setLayoutData(new RowData(90, 20));
-        mTaste = new Text(parent, SWT.BORDER);
+        mTaste = new Combo(parent, SWT.BORDER);
+        mTaste.setItems(Items);
         mTaste.setLayoutData(new RowData(90, 20));
         mDate = new Text(parent, SWT.BORDER);
         mDate.setLayoutData(new RowData(90, 20));
@@ -149,13 +153,13 @@ class ControlPanel extends Composite {
     }
 
     private void removeGreaterButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, "REM.GREATER", new ConfirmWindow((s,d) -> {
+        new CommonButton(parent, SWT.PUSH, "REM.GREATER", () -> new ConfirmWindow((s,d) -> {
             try {
                 mTablePanel.removeGreater(getFood());
             } catch (ParseException ex) {
                 new InfoWindow(ex).open();
             }
-        })::open);
+        }).open());
     }
 
     private Food getFood() throws ParseException {
