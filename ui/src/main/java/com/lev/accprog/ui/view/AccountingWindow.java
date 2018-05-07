@@ -7,23 +7,29 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
 
-public class AccountingWindow {
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
-    private final String LABEL_MAIN = "Collection program";
+public class AccountingWindow {
 
     private Display mDisplay = new Display();
     private QueueController mQueueController;
     private TablePanel mTablePanel;
     private Shell mMainShell = new Shell(mDisplay);
+    public static ResourceBundle mMessages;
     private ControlPanel mControlPanel;
 
     public AccountingWindow(QueueController queueController) {
         mQueueController = queueController;
     }
 
-    public void run() {
+    public void run(Locale locale) {
         RowLayout layout = new RowLayout();
-        mMainShell.setText(LABEL_MAIN);
+        mMessages = ResourceBundle.getBundle("messages",locale);
+        mMainShell.setText(mMessages.getString("main_label"));
         mMainShell.setLayout(layout);
         mTablePanel = new TablePanel(mMainShell, SWT.NONE, mQueueController);
         mControlPanel = new ControlPanel(mMainShell, SWT.NONE, mTablePanel);
@@ -35,18 +41,16 @@ public class AccountingWindow {
             if (!mDisplay.readAndDispatch())
                 mDisplay.sleep();
         }
-        //mDisplay.dispose();
     }
-
 
     private void setUpMenuBar() {
         Menu menuBar = new Menu(mMainShell, SWT.BAR);
         MenuItem menuHeader = new MenuItem(menuBar, SWT.CASCADE);
-        menuHeader.setText("File");
+        menuHeader.setText(mMessages.getString("file"));
         Menu fileMenu = new Menu(mMainShell, SWT.DROP_DOWN);
         menuHeader.setMenu(fileMenu);
         MenuItem fileHelpItem = new MenuItem(fileMenu, SWT.PUSH);
-        fileHelpItem.setText("Help");
+        fileHelpItem.setText(mMessages.getString("help"));
         fileHelpItem.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
                 new InfoWindow("HELP",
@@ -56,9 +60,48 @@ public class AccountingWindow {
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
-        MenuItem fileInfoItem = new MenuItem(fileMenu, SWT.PUSH);
-        fileInfoItem.setText("Info");
-        fileInfoItem.addSelectionListener(new SelectionListener() {
+        MenuItem ru = new MenuItem(fileMenu, SWT.PUSH);
+        ru.setText("Russian");
+        ru.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+               run(new Locale("ru", "RU"));
+            }
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+            }
+        });
+        MenuItem tu = new MenuItem(fileMenu, SWT.PUSH);
+        tu.setText("Turkish");
+        tu.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                run(new Locale("tu", "TU"));
+            }
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+            }
+        });
+        MenuItem ve = new MenuItem(fileMenu, SWT.PUSH);
+        ve.setText("Vengerian");
+        ve.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                new Locale("vn", "VN");
+            }
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+            }
+        });
+        MenuItem en = new MenuItem(fileMenu, SWT.PUSH);
+        en.setText("English(India)");
+        en.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                new Locale("en", "IN");
+            }
+            public void widgetDefaultSelected(SelectionEvent e) {
+            }
+        });
+        MenuItem info = new MenuItem(fileMenu, SWT.PUSH);
+        info.setText(mMessages.getString("info"));
+        info.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
                 mQueueController.handleCommand("info", null, (info, newData)
                         -> new InfoWindow("Information", info).open());
@@ -69,28 +112,5 @@ public class AccountingWindow {
         });
         mMainShell.setMenuBar(menuBar);
     }
-    private void lala(){
-        Shell shell=new Shell(mDisplay);
-        shell.open();
-        Text Login=new Text(shell,SWT.BORDER | SWT.CENTER);
-        Text Password=new Text(shell,SWT.BORDER | SWT.CENTER);
-        Button button=new Button(shell,SWT.PUSH);
-        button.addSelectionListener(new SelectionListener() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-
-            }
-        });
-        while (!shell.isDisposed()) {
-            if (!mDisplay.readAndDispatch())
-                mDisplay.sleep();
-        }
-    }
-
 }
 

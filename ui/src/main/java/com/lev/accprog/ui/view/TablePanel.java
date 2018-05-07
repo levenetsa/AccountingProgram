@@ -32,6 +32,7 @@ class TablePanel extends Composite {
         addRadios(sortButtons);
     }
 
+
     private void addRadios(Composite parent) {
         Button[] radios = new Button[3];
         Button button2 = new Button(parent, SWT.PUSH);

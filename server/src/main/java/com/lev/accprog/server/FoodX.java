@@ -1,8 +1,5 @@
 package com.lev.accprog.server;
 
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-
 public class FoodX {
     private Food.TASTE taste;
     private String expirationDate;
@@ -11,7 +8,7 @@ public class FoodX {
     public FoodX(Food food){
         setName(food.getName());
         setTaste(food.getTaste());
-        setExpirationDate(food.getExpirationDate());
+        setExpirationDate(food.getTime());
     }
 
     public Food.TASTE getTaste() {
@@ -26,9 +23,8 @@ public class FoodX {
         return expirationDate;
     }
 
-    public void setExpirationDate(GregorianCalendar expirationDate) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        this.expirationDate = formatter.format(expirationDate.getTime());
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     public String getName() {

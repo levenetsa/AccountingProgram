@@ -37,11 +37,14 @@ class ControlPanel extends Composite {
         Composite parent = new Composite(this, SWT.NONE);
         parent.setLayout(new RowLayout());
         mName = new Text(parent, SWT.BORDER);
+        mName.setText("apple");
         mName.setLayoutData(new RowData(90, 20));
         mTaste = new Combo(parent, SWT.BORDER);
         mTaste.setItems(Items);
+        mTaste.select(1);
         mTaste.setLayoutData(new RowData(90, 20));
         mDate = new Text(parent, SWT.BORDER);
+        mDate.setText("1911-11-11");
         mDate.setLayoutData(new RowData(90, 20));
     }
 

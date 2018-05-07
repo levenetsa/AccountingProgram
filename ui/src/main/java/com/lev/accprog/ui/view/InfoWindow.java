@@ -40,7 +40,7 @@ public class InfoWindow {
         mShell.setText(title);
         Text text = new Text(mShell, SWT.READ_ONLY);
         text.setText(content);
-        text.setLayoutData(new RowData(500,50));
+        text.setLayoutData(new RowData(1250,30));
         new CommonButton(mShell, SWT.PUSH,"Cancel", mShell::close);
     }
 

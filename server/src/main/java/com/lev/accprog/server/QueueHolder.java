@@ -3,8 +3,8 @@ package com.lev.accprog.server;
 import org.json.JSONException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
@@ -18,9 +18,11 @@ private static final String HELP = "You should pass file name as argument for co
     }
 
     private PriorityQueue<Food> mQueue;
+    private FoodDAO<Food> dao;
 
     public QueueHolder() {
         mQueue = new PriorityQueue<>();
+        dao = new FoodDAO<>(Food.class);
     }
 
     public void handleCommand(Command command) {
@@ -119,14 +121,10 @@ private static final String HELP = "You should pass file name as argument for co
      * @param s строка , которую мы записываем в коллецию
      */
     private void loadDataFrom(String s) {
-        FileIO writter = new FileIO();
         try {
-            FoodDAO dao = new FoodDAO();
             mQueue.addAll(dao.getFood());
             System.out.println("Data loaded from " + s);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -136,12 +134,19 @@ private static final String HELP = "You should pass file name as argument for co
      * @param fileName аргумент в строковом формате
      */
     private void putDataTo(String fileName) {
-        FoodDAO dao = new FoodDAO();
         try {
-            dao.saveFood(new ArrayList<>(mQueue));
+            dao.addAll(new ArrayList<>(mQueue));
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
         //FileIO writer = new FileIO();
@@ -161,7 +166,7 @@ private static final String HELP = "You should pass file name as argument for co
      */
 
     public void removeGreater(Food food) {
-        while (!mQueue.isEmpty() && mQueue.peek().getExpirationDate().compareTo(food.getExpirationDate()) > 0) {
+        while (!mQueue.isEmpty() && mQueue.peek().getTime().compareTo(food.getTime()) > 0) {
             mQueue.poll();
         }
 
