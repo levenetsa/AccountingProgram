@@ -13,7 +13,7 @@ class CommonButton{
     String mText;
     Button mButton;
     CommonButton(Composite parent, int flags, String text, ResourceBundle mMessages, ClickListener clickListener) {
-        mMessages = mMessages;
+        this.mMessages = mMessages;
         mText = text;
          mButton = new Button(parent, flags);
         RowData layout = new RowData();

@@ -143,7 +143,7 @@ class ControlPanel extends Composite {
     }
 
     private void addCreateButton(Composite parent) {
-        createButton = new CommonButton(parent, SWT.PUSH, mMessages.getString("ADD"), mMessages, () -> {
+        createButton = new CommonButton(parent, SWT.PUSH, "ADD", mMessages, () -> {
 
             Food food;
             try {
@@ -157,7 +157,7 @@ class ControlPanel extends Composite {
     }
 
     private void removeAllLikeButton(Composite parent) {
-        removeAllLikeButton = new CommonButton(parent, SWT.PUSH, mMessages.getString("REMOVE_ALL"), mMessages, () -> new ConfirmWindow((s, d) -> {
+        removeAllLikeButton = new CommonButton(parent, SWT.PUSH, "REMOVE_ALL", mMessages, () -> new ConfirmWindow((s, d) -> {
             try {
                 mTablePanel.deleteAllLike(getFood());
             } catch (ParseException e) {
@@ -167,7 +167,7 @@ class ControlPanel extends Composite {
     }
 
     private void removeGreaterButton(Composite parent) {
-        removeGreaterButton = new CommonButton(parent, SWT.PUSH, mMessages.getString("REM.GREATER"), mMessages, () -> new ConfirmWindow((s, d) -> {
+        removeGreaterButton = new CommonButton(parent, SWT.PUSH, "REM.GREATER", mMessages, () -> new ConfirmWindow((s, d) -> {
             try {
                 mTablePanel.removeGreater(getFood());
             } catch (ParseException ex) {
