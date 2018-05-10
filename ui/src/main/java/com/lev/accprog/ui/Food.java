@@ -4,6 +4,8 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -12,6 +14,8 @@ public class Food implements Comparable<Food> {
     private TASTE taste;
     private GregorianCalendar expirationDate;
     private String name;
+    private LocalDateTime created;
+
 
     public Food() {
         this.name = "default";
@@ -21,6 +25,12 @@ public class Food implements Comparable<Food> {
     public void setDate(int year, int month, int day) {
         month--;
         this.expirationDate = new GregorianCalendar(year, month, day);
+    }
+
+    public void setCreated(String str) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss.SSSSS");
+        String inputModified=str.replace(" ","T");
+        created=LocalDateTime.parse(inputModified);
     }
 
     public void setDate(String str) throws ParseException {
@@ -52,6 +62,10 @@ public class Food implements Comparable<Food> {
 
     public String getName() {
         return name;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
     }
 
     public enum TASTE {

@@ -8,7 +8,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
-
+import com.lev.accprog.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -34,19 +34,21 @@ class TablePanel extends Composite {
 
 
     private void addRadios(Composite parent) {
-        Button[] radios = new Button[3];
+        Button[] radios = new Button[4];
         Button button2 = new Button(parent, SWT.PUSH);
         button2.setText("SORT BY");
         button2.setLayoutData(rowData());
         button2.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-                Comparator<Food> comparator;
+                Comparator<Food> comparator=null;
                 if (radios[0].getSelection()) {
                     comparator = Comparator.comparing(Food::getName);
                 } else if (radios[1].getSelection()) {
                     comparator = Comparator.comparing(Food::getTaste);
-                } else {
+                } else if (radios[2].getSelection()) {
                     comparator = Comparator.comparing(Food::getExpirationDate);
+                } else if (radios[3].getSelection()) {
+                    comparator = Comparator.comparing(Food::getCreated);
                 }
                 mFoods = mFoods.stream().sorted(comparator).collect(Collectors.toList());
                 mTable.removeAll();
@@ -63,6 +65,8 @@ class TablePanel extends Composite {
         radios[1].setSelection(true);
         radios[2] = new Button(parent, SWT.RADIO);
         radios[2].setText("Date");
+        radios[3] = new Button(parent, SWT.RADIO);
+        radios[3].setText("Create");
     }
 
     private void createTable() {
@@ -75,6 +79,7 @@ class TablePanel extends Composite {
         createTableColumn(mTable, SWT.LEFT, "Name", 86);
         createTableColumn(mTable, SWT.CENTER, "Taste", 85);
         createTableColumn(mTable, SWT.RIGHT, "Date", 100);
+        createTableColumn(mTable,SWT.RIGHT,"SOZDAN",100);
         load();
     }
 
@@ -87,6 +92,7 @@ class TablePanel extends Composite {
     }
 
     private void addTableContents(List<Food> queue) {
+
         mFoods = queue;
         mTable.removeAll();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -94,7 +100,8 @@ class TablePanel extends Composite {
             String[] row = new String[]{
                     food.getName(),
                     String.valueOf(food.getTaste()),
-                    formatter.format(food.getExpirationDate().getTime())
+                    formatter.format(food.getExpirationDate().getTime()),
+                    String.valueOf(food.getCreated())
             };
             TableItem ti = new TableItem(mTable, SWT.NONE);
             ti.setText(row);

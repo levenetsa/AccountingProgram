@@ -36,7 +36,7 @@ public class AccountingWindow {
         setUpMenuBar();
         mMainShell.addListener(SWT.Close, event -> System.exit(0));
         mMainShell.open();
-        mMainShell.setSize(680, 300);
+        mMainShell.setSize(900, 300);
         while (!mMainShell.isDisposed()) {
             if (!mDisplay.readAndDispatch())
                 mDisplay.sleep();
@@ -80,22 +80,22 @@ public class AccountingWindow {
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
-        MenuItem ve = new MenuItem(fileMenu, SWT.PUSH);
-        ve.setText("Vengerian");
-        ve.addSelectionListener(new SelectionListener() {
+        MenuItem ke = new MenuItem(fileMenu, SWT.PUSH);
+        ke.setText("Vengerian");
+        ke.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-                new Locale("vn", "VN");
+                run(new Locale("vn", "VN"));
             }
 
             public void widgetDefaultSelected(SelectionEvent e) {
             }
-        });
-        MenuItem en = new MenuItem(fileMenu, SWT.PUSH);
-        en.setText("English(India)");
-        en.addSelectionListener(new SelectionListener() {
+        }); MenuItem le = new MenuItem(fileMenu, SWT.PUSH);
+        le.setText("English(Indian)");
+        le.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-                new Locale("en", "IN");
+                run(new Locale("en", "IN"));
             }
+
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         });

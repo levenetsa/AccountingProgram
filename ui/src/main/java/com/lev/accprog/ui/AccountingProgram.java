@@ -9,6 +9,6 @@ public class AccountingProgram {
 
     public static void main(String[] args) {
         QueueController queueController = new QueueController();
-        new AccountingWindow(queueController).run(new Locale("ru", "RU"));
+        new AccountingWindow(queueController).run(new Locale("en", "IN"));
     }
 }

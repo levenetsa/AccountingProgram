@@ -1,14 +1,27 @@
 package com.lev.accprog.server;
 
+import java.time.LocalDateTime;
+
 public class FoodX {
     private Food.TASTE taste;
     private String expirationDate;
     private String name;
 
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    private LocalDateTime created;
+
     public FoodX(Food food){
         setName(food.getName());
         setTaste(food.getTaste());
         setExpirationDate(food.getTime());
+        setCreated(food.getCreated());
     }
 
     public Food.TASTE getTaste() {

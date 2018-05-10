@@ -56,6 +56,7 @@ public class QueueController {
         res.setDate(parser.getString("expirationDate"));
         res.setName(parser.getString("name"));
         res.setTaste(Food.TASTE.valueOf(parser.getString("taste")));
+        res.setCreated(parser.getString("created"));
         return res;
     }
 }

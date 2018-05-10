@@ -26,7 +26,7 @@ class ConfirmWindow {
             mConfirmShell = new Shell();
         }
         mConfirmShell.setLayout(layout);
-        mConfirmShell.setText("Are you sure?");
+        mConfirmShell.setText(AccountingWindow.mMessages.getString("Are_you_sure?"));
         addOk(mConfirmShell);
         addCancel(mConfirmShell);
         mConfirmShell.setSize(300, 100);
@@ -34,13 +34,13 @@ class ConfirmWindow {
     }
 
     private void addOk(Shell shell) {
-        new CommonButton(shell, SWT.PUSH, "Ok", () -> {
+        new CommonButton(shell, SWT.PUSH, AccountingWindow.mMessages.getString("ok"), () -> {
             mCallback.onConfirm(null, null);
             shell.dispose();
         });
     }
 
     private void addCancel(Shell shell) {
-        new CommonButton(shell, SWT.PUSH, "Cancel", shell::close);
+        new CommonButton(shell, SWT.PUSH, AccountingWindow.mMessages.getString("Cancel"), shell::close);
     }
 }

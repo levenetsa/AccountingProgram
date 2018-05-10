@@ -1,6 +1,7 @@
 package com.lev.accprog.ui;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.GregorianCalendar;
 
 public class FoodX {
@@ -8,10 +9,21 @@ public class FoodX {
     private String expirationDate;
     private String name;
 
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    private LocalDateTime created;
+
     public FoodX(Food food){
         setName(food.getName());
         setTaste(food.getTaste());
         setExpirationDate(food.getExpirationDate());
+        setCreated(food.getCreated());
     }
 
     public Food.TASTE getTaste() {

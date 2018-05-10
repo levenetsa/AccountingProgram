@@ -23,12 +23,13 @@ public class InfoWindow {
     InfoWindow(final Exception e) {
         mShell = new Shell(APPLICATION_MODAL | BORDER | CLOSE);
         RowLayout layout = new RowLayout();
+        mShell.layout();
         layout.justify = true;
         layout.marginTop = 17;
         mShell.setLayout(layout);
         mShell.setText("Error");
         new Text(mShell, SWT.READ_ONLY).setText(e.getMessage());
-        mShell.setSize(500, 100);
+        mShell.setSize(200, 100);
     }
 
     public InfoWindow(String title, String content){
@@ -40,7 +41,7 @@ public class InfoWindow {
         mShell.setText(title);
         Text text = new Text(mShell, SWT.READ_ONLY);
         text.setText(content);
-        text.setLayoutData(new RowData(1250,30));
+        text.setLayoutData(new RowData(1200,30));
         new CommonButton(mShell, SWT.PUSH,"Cancel", mShell::close);
     }
 
