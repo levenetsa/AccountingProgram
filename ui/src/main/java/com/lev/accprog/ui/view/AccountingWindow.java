@@ -24,19 +24,14 @@ public class AccountingWindow {
     }
 
     public void run(Locale locale) {
-        //Shell oldShell = mMainShell;
-       // mMainShell =new Shell(mDisplay);
-        //mMainShell.setVisible(false);
+        mMessages = ResourceBundle.getBundle("messages", locale);
         mMainShell.setSize(900, 300);
         RowLayout layout = new RowLayout();
-        mMessages = ResourceBundle.getBundle("messages",locale);
-       // mMainShell.setText(mMessages.getString("main_label"));
         mMainShell.setLayout(layout);
-        mTablePanel = new TablePanel(mMainShell, SWT.NONE, mQueueController, mMessages);
+        mTablePanel = new TablePanel(mMainShell,  SWT.NONE, mQueueController, mMessages);
         mControlPanel = new ControlPanel(mMainShell, SWT.NONE, mTablePanel, mMessages);
         setUpMenuBar();
         mMainShell.addListener(SWT.Close, event -> System.exit(0));
-        //oldShell.setVisible(false);
         resetText(locale);
         mMainShell.setVisible(true);
         mMainShell.open();
@@ -122,13 +117,7 @@ public class AccountingWindow {
         mMenuHeader.setText(mMessages.getString("file"));
         mFileHelpItem.setText(mMessages.getString("help"));
         mControlPanel.resetText(mMessages);
-       // mControlPanel.redraw();
         mTablePanel.resetText(mMessages);
-      //  mControlPanel.redraw();
-    //    mMainShell.update();
-      //  mMainShell.layout();
-       // mMainShell.layout();
-       // mTablePanel.resetText(locale);
     }
 }
 

@@ -8,7 +8,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.*;
-import com.lev.accprog.*;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -32,13 +32,14 @@ class TablePanel extends Composite {
         Composite sortButtons = new Composite(this, SWT.NONE);
         sortButtons.setLayout(new RowLayout());
         addRadios(sortButtons);
+        resetText(mMessages);
     }
 
-
+    Button[] radios;
+    Button button2;
     private void addRadios(Composite parent) {
-        Button[] radios = new Button[4];
-        Button button2 = new Button(parent, SWT.PUSH);
-        button2.setText("SORT BY");
+        radios = new Button[4];
+        button2 = new Button(parent, SWT.PUSH);
         button2.setLayoutData(rowData());
         button2.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
@@ -61,15 +62,29 @@ class TablePanel extends Composite {
             }
         });
         radios[0] = new Button(parent, SWT.RADIO);
-        radios[0].setText(mMessages.getString("Name"));
         radios[1] = new Button(parent, SWT.RADIO);
-        radios[1].setText(mMessages.getString("taste"));
         radios[1].setSelection(true);
         radios[2] = new Button(parent, SWT.RADIO);
-        radios[2].setText(mMessages.getString("Date"));
         radios[3] = new Button(parent, SWT.RADIO);
-        radios[3].setText(mMessages.getString("Create"));
     }
+
+    public void resetText(ResourceBundle messages) {
+        mMessages = messages;
+        button2.setText("SORT BY");
+        radios[0].setText(mMessages.getString("Name"));
+        radios[1].setText(mMessages.getString("taste"));
+        radios[2].setText(mMessages.getString("Date"));
+        radios[3].setText(mMessages.getString("Create"));
+        column1.setText(mMessages.getString("Name"));
+        column2.setText(mMessages.getString("taste"));
+        column3.setText(mMessages.getString("Date"));
+        column4.setText(mMessages.getString("Create"));
+    }
+
+    TableColumn column2;
+    TableColumn column1;
+    TableColumn column3;
+    TableColumn column4;
 
     private void createTable() {
         mTable = new Table(this, SWT.FULL_SELECTION | SWT.V_SCROLL);
@@ -78,19 +93,20 @@ class TablePanel extends Composite {
         RowData rowData = new RowData();
         rowData.height = 150;
         mTable.setLayoutData(rowData);
-        createTableColumn(mTable, SWT.LEFT, mMessages.getString("Name"), 86);
-        createTableColumn(mTable, SWT.CENTER, mMessages.getString("taste"), 85);
-        createTableColumn(mTable, SWT.RIGHT, mMessages.getString("Date"), 100);
-        createTableColumn(mTable,SWT.RIGHT,"Create",100);
+        column1 = createTableColumn(mTable, SWT.LEFT, mMessages.getString("Name"), 86);
+        column2 = createTableColumn(mTable, SWT.CENTER, mMessages.getString("taste"), 85);
+        column3 = createTableColumn(mTable, SWT.RIGHT, mMessages.getString("Date"), 100);
+        column4 = createTableColumn(mTable,SWT.RIGHT,mMessages.getString("Create"),100);
         load();
     }
 
-    private void createTableColumn
+    private TableColumn createTableColumn
             (Table table, int style, String title, int width) {
         TableColumn tc = new TableColumn(table, style);
         tc.setText(title);
         tc.setResizable(true);
         tc.setWidth(width);
+        return tc;
     }
 
     private void addTableContents(List<Food> queue) {
@@ -116,21 +132,21 @@ class TablePanel extends Composite {
 
     void delete() {
         if (mTable.getSelectionIndex() == -1) return;
-        mQueueController.handleCommand(mMessages.getString("remove"), mFoods.get(mTable.getSelectionIndex()),
+        mQueueController.handleCommand("remove", mFoods.get(mTable.getSelectionIndex()),
                 (s, d) -> reset(d));
     }
 
     void deleteAllLike(Food food) {
-        mQueueController.handleCommand(mMessages.getString("remove_all"), food,
+        mQueueController.handleCommand("remove_all", food,
                 (s, d) ->  reset(d));
     }
 
     void addIfMax(Food food){
-        mQueueController.handleCommand(mMessages.getString("add_if_max"), food, (s, d) ->  reset(d));
+        mQueueController.handleCommand("add_if_max", food, (s, d) ->  reset(d));
     }
 
     void add(Food food){
-        mQueueController.handleCommand(mMessages.getString("add"), food , (s, d) ->  reset(d));
+        mQueueController.handleCommand("add", food , (s, d) ->  reset(d));
     }
 
     void filter(Predicate<Food> filter) {
@@ -152,11 +168,8 @@ class TablePanel extends Composite {
     }
 
     void removeGreater(Food food) {
-        mQueueController.handleCommand(mMessages.getString("remove_greater"), food,
+        mQueueController.handleCommand("remove_greater", food,
                 (s, d) ->  reset(d));
     }
 
-    public void resetText(ResourceBundle mMessages) {
-        
-    }
 }
