@@ -19,7 +19,7 @@ public class AccountingWindow {
     private QueueController mQueueController;
     private TablePanel mTablePanel;
     private Shell mMainShell = new Shell(mDisplay);
-    public static ResourceBundle mMessages;
+    public  ResourceBundle mMessages;
     private ControlPanel mControlPanel;
 
     public AccountingWindow(QueueController queueController) {
@@ -27,16 +27,21 @@ public class AccountingWindow {
     }
 
     public void run(Locale locale) {
+        Shell oldShell = mMainShell;
+        mMainShell =new Shell(mDisplay);
+        mMainShell.setVisible(false);
+        mMainShell.setSize(900, 300);
         RowLayout layout = new RowLayout();
         mMessages = ResourceBundle.getBundle("messages",locale);
         mMainShell.setText(mMessages.getString("main_label"));
         mMainShell.setLayout(layout);
-        mTablePanel = new TablePanel(mMainShell, SWT.NONE, mQueueController);
-        mControlPanel = new ControlPanel(mMainShell, SWT.NONE, mTablePanel);
+        mTablePanel = new TablePanel(mMainShell, SWT.NONE, mQueueController, mMessages);
+        mControlPanel = new ControlPanel(mMainShell, SWT.NONE, mTablePanel, mMessages);
         setUpMenuBar();
         mMainShell.addListener(SWT.Close, event -> System.exit(0));
+        oldShell.setVisible(false);
+        mMainShell.setVisible(true);
         mMainShell.open();
-        mMainShell.setSize(900, 300);
         while (!mMainShell.isDisposed()) {
             if (!mDisplay.readAndDispatch())
                 mDisplay.sleep();

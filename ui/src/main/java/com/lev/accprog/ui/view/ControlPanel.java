@@ -14,6 +14,7 @@
         import java.util.Calendar;
         import java.util.Date;
         import java.util.GregorianCalendar;
+        import java.util.ResourceBundle;
         import java.util.function.Predicate;
 
 
@@ -25,11 +26,13 @@ class ControlPanel extends Composite {
     private Text mCreated;
     private TablePanel mTablePanel;
     private Shell mParent;
+    private ResourceBundle mMessages;
     private String Items[]={"SWEET","SPICY","SALTY"};
 
-    ControlPanel(Shell parent, int style, TablePanel tablePanel) {
+    ControlPanel(Shell parent, int style, TablePanel tablePanel, ResourceBundle mMessages) {
         super(parent, style);
         mParent = parent;
+        this.mMessages = mMessages;
         mTablePanel = tablePanel;
         this.setLayout(new RowLayout(SWT.VERTICAL));
         addTextFields();
@@ -110,24 +113,24 @@ class ControlPanel extends Composite {
             }
         });
         filters[0] = new Button(panel, SWT.CHECK);
-        filters[0].setText(AccountingWindow.mMessages.getString("Name"));
+        filters[0].setText(mMessages.getString("Name"));
         filters[1] = new Button(panel, SWT.CHECK);
-        filters[1].setText(AccountingWindow.mMessages.getString("Taste"));
+        filters[1].setText(mMessages.getString("Taste"));
         filters[1].setSelection(true);
         filters[2] = new Button(panel, SWT.CHECK);
-        filters[2].setText(AccountingWindow.mMessages.getString("Date1"));
+        filters[2].setText(mMessages.getString("Date1"));
         filters[3] = new Button(panel, SWT.CHECK);
-        filters[3].setText(AccountingWindow.mMessages.getString("Time"));
-        new CommonButton(panel, SWT.PUSH, AccountingWindow.mMessages.getString("REFRESH"), () -> mTablePanel.load());
+        filters[3].setText(mMessages.getString("Time"));
+        new CommonButton(panel, SWT.PUSH, mMessages.getString("REFRESH"), () -> mTablePanel.load());
     }
 
     private void addRemoveButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, AccountingWindow.mMessages.getString("REMOVE"), () ->
-                new ConfirmWindow((s,d) -> mTablePanel.delete()).open());
+        new CommonButton(parent, SWT.PUSH, mMessages.getString("REMOVE"), () ->
+                new ConfirmWindow((s,d) -> mTablePanel.delete(), mMessages).open());
     }
 
     private void addIfMaxButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, AccountingWindow.mMessages.getString("ADD_IF_MAX"), () -> {
+        new CommonButton(parent, SWT.PUSH, mMessages.getString("ADD_IF_MAX"), () -> {
             Food food;
             try {
 
@@ -142,7 +145,7 @@ class ControlPanel extends Composite {
     }
 
     private void addCreateButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, AccountingWindow.mMessages.getString("ADD"), () -> {
+        new CommonButton(parent, SWT.PUSH, mMessages.getString("ADD"), () -> {
 
             Food food;
             try {
@@ -156,23 +159,23 @@ class ControlPanel extends Composite {
     }
 
     private void removeAllLikeButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, AccountingWindow.mMessages.getString("REMOVE_ALL"), () -> new ConfirmWindow((s, d) -> {
+        new CommonButton(parent, SWT.PUSH, mMessages.getString("REMOVE_ALL"), () -> new ConfirmWindow((s, d) -> {
             try {
                 mTablePanel.deleteAllLike(getFood());
             } catch (ParseException e) {
                 new InfoWindow(e).open();
             }
-        }).open());
+        }, mMessages).open());
     }
 
     private void removeGreaterButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, AccountingWindow.mMessages.getString("REM.GREATER"), () -> new ConfirmWindow((s,d) -> {
+        new CommonButton(parent, SWT.PUSH, mMessages.getString("REM.GREATER"), () -> new ConfirmWindow((s,d) -> {
             try {
                 mTablePanel.removeGreater(getFood());
             } catch (ParseException ex) {
                 new InfoWindow(ex).open();
             }
-        }).open());
+        }, mMessages).open());
     }
 
     private Food getFood() throws ParseException {

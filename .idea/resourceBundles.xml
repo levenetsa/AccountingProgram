@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ResourceBundleManager">
-    <file url="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess.properties" />
-    <file url="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess_en_IN.properties" />
-    <file url="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess_ru_RU.properties" />
-    <file url="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess_tu_TU.properties" />
-    <file url="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess_vn_VN.properties" />
+    <file url="file://$PROJECT_DIR$/ui/src/main/resources/messages.properties" />
+    <file url="file://$PROJECT_DIR$/ui/src/main/resources/messages_en_IN.properties" />
+    <file url="file://$PROJECT_DIR$/ui/src/main/resources/messages_ru_RU.properties" />
     <custom-resource-bundle>
-      <file value="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess.properties" />
-      <file value="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess_en_IN.properties" />
-      <file value="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess_ru_RU.properties" />
-      <file value="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess_tu_TU.properties" />
-      <file value="file://$PROJECT_DIR$/ui/src/main/java/res/Messagess_vn_VN.properties" />
-      <base-name>Messagess</base-name>
+      <file value="file://$PROJECT_DIR$/ui/src/main/resources/messages.properties" />
+      <file value="file://$PROJECT_DIR$/ui/src/main/resources/messages_en_IN.properties" />
+      <file value="file://$PROJECT_DIR$/ui/src/main/resources/messages_ru_RU.properties" />
+      <file value="file://$PROJECT_DIR$/ui/src/main/resources/messages_tu_TU.properties" />
+      <file value="file://$PROJECT_DIR$/ui/src/main/resources/messages_vn_VN.properties" />
+      <base-name>messages</base-name>
     </custom-resource-bundle>
   </component>
 </project>
