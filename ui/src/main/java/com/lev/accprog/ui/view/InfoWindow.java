@@ -1,6 +1,7 @@
 package com.lev.accprog.ui.view;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Shell;
@@ -30,6 +31,7 @@ public class InfoWindow {
         mShell.setText("Error");
         new Text(mShell, SWT.READ_ONLY).setText(e.getMessage());
         mShell.setSize(200, 100);
+        mShell.setSize(new Point(600,100));
     }
 
     public InfoWindow(String title, String content){
@@ -42,6 +44,7 @@ public class InfoWindow {
         Text text = new Text(mShell, SWT.READ_ONLY);
         text.setText(content);
         text.setLayoutData(new RowData(1200,30));
+        mShell.setSize(new Point(600,100));
         new CommonButton(mShell, SWT.PUSH,"Cancel", mShell::close);
     }
 
