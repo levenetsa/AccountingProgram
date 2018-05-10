@@ -6,15 +6,22 @@ import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
+import java.util.ResourceBundle;
+
 class CommonButton{
-    CommonButton(Composite parent, int flags, String text, ClickListener clickListener) {
-        Button button = new Button(parent, flags);
+    ResourceBundle mMessages;
+    String mText;
+    Button mButton;
+    CommonButton(Composite parent, int flags, String text, ResourceBundle mMessages, ClickListener clickListener) {
+        mMessages = mMessages;
+        mText = text;
+         mButton = new Button(parent, flags);
         RowData layout = new RowData();
         layout.width = 100;
         layout.height = 20;
-        button.setLayoutData(layout);
-        button.setText(text);
-        button.addSelectionListener(new SelectionListener() {
+        mButton.setLayoutData(layout);
+        mButton.setText(mMessages.getString(mText));
+        mButton.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 clickListener.onClick();
@@ -25,6 +32,10 @@ class CommonButton{
 
             }
         });
+    }
+
+    public void resetText(ResourceBundle mMessages) {
+        mButton.setText(mMessages.getString(mText));
     }
 
     public interface ClickListener{

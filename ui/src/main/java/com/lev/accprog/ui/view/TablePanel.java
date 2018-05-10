@@ -155,4 +155,8 @@ class TablePanel extends Composite {
         mQueueController.handleCommand(mMessages.getString("remove_greater"), food,
                 (s, d) ->  reset(d));
     }
+
+    public void resetText(ResourceBundle mMessages) {
+        
+    }
 }

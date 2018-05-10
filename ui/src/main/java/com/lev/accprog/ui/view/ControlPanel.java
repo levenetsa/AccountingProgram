@@ -9,12 +9,7 @@
 
         import java.text.ParseException;
         import java.text.SimpleDateFormat;
-        import java.time.LocalDateTime;
-        import java.time.format.DateTimeFormatter;
-        import java.util.Calendar;
-        import java.util.Date;
-        import java.util.GregorianCalendar;
-        import java.util.ResourceBundle;
+        import java.util.*;
         import java.util.function.Predicate;
 
 
@@ -37,6 +32,7 @@ class ControlPanel extends Composite {
         this.setLayout(new RowLayout(SWT.VERTICAL));
         addTextFields();
         addButtons();
+        resetText(mMessages);
     }
 
     private void addTextFields() {
@@ -71,28 +67,28 @@ class ControlPanel extends Composite {
         removeGreaterButton(removeButtons);
         addFilters(parent);
     }
-
+    Button[] mFilters;
     private void addFilters(Composite parent) {
         Composite panel = new Composite(parent, SWT.NONE);
         panel.setLayout(new RowLayout(SWT.VERTICAL));
-        Button[] filters = new Button[4];
-        new CommonButton(panel, SWT.PUSH, "Filter By:", () -> {
+        mFilters = new Button[4];
+        new CommonButton(panel, SWT.PUSH, "Filter_By", mMessages, () -> {
             try {
                 Predicate<Food> filter = null;
-                if (filters[0].getSelection()) {
+                if (mFilters[0].getSelection()) {
                     filter = x -> x.getName().toLowerCase().contains(mName.getText().toLowerCase());
                 }
-                if (filters[1].getSelection()) {
+                if (mFilters[1].getSelection()) {
                     filter = x -> x.getTaste().toString().contains(mTaste.getText().toUpperCase());
                 }
-                if (filters[2].getSelection()) {
+                if (mFilters[2].getSelection()) {
                     final String dateText = mDate.getText();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     Date date;
                     try {
                         date = sdf.parse(dateText);
                     } catch (ParseException exception) {
-                        new InfoWindow(exception).open();
+                        new InfoWindow(exception, mMessages).open();
                         return;
                     }
                     Calendar cal = Calendar.getInstance();
@@ -102,42 +98,44 @@ class ControlPanel extends Composite {
                             cal.get(Calendar.DAY_OF_MONTH));
                     filter = x -> x.getExpirationDate().equals(dataParsed);
                 }
-                if (filters[3].getSelection()) {
+                if (mFilters[3].getSelection()) {
                     filter = x -> x.getCreated().toString().contains(mCreated.getText().toUpperCase());
                 }
                 if (filter != null) {
                     mTablePanel.filter(filter);
                 }
             } catch (Exception exception) {
-                new InfoWindow(exception).open();
+                new InfoWindow(exception, mMessages).open();
             }
         });
-        filters[0] = new Button(panel, SWT.CHECK);
-        filters[0].setText(mMessages.getString("Name"));
-        filters[1] = new Button(panel, SWT.CHECK);
-        filters[1].setText(mMessages.getString("Taste"));
-        filters[1].setSelection(true);
-        filters[2] = new Button(panel, SWT.CHECK);
-        filters[2].setText(mMessages.getString("Date1"));
-        filters[3] = new Button(panel, SWT.CHECK);
-        filters[3].setText(mMessages.getString("Time"));
-        new CommonButton(panel, SWT.PUSH, mMessages.getString("REFRESH"), () -> mTablePanel.load());
+        mFilters[0] = new Button(panel, SWT.CHECK);
+        mFilters[1] = new Button(panel, SWT.CHECK);;
+        mFilters[1].setSelection(true);
+        mFilters[2] = new Button(panel, SWT.CHECK);
+        mFilters[3] = new Button(panel, SWT.CHECK);
+        refreshButton = new CommonButton(panel, SWT.PUSH, "REFRESH",mMessages, () -> mTablePanel.load());
     }
+    CommonButton refreshButton;
+    CommonButton removeButton;
+    CommonButton addIfmaxButton;
+    CommonButton createButton;
+    CommonButton removeAllLikeButton;
+    CommonButton removeGreaterButton;
 
     private void addRemoveButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, mMessages.getString("REMOVE"), () ->
+        removeButton = new CommonButton(parent, SWT.PUSH, "REMOVE", mMessages, () ->
                 new ConfirmWindow((s,d) -> mTablePanel.delete(), mMessages).open());
     }
 
     private void addIfMaxButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, mMessages.getString("ADD_IF_MAX"), () -> {
+        addIfmaxButton = new CommonButton(parent, SWT.PUSH, "ADD_IF_MAX", mMessages, () -> {
             Food food;
             try {
 
                 food = getFood();
 
             } catch (Exception exception) {
-                new InfoWindow(exception).open();
+                new InfoWindow(exception, mMessages).open();
                 return;
             }
             mTablePanel.addIfMax(food);
@@ -145,13 +143,13 @@ class ControlPanel extends Composite {
     }
 
     private void addCreateButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, mMessages.getString("ADD"), () -> {
+        createButton = new CommonButton(parent, SWT.PUSH, mMessages.getString("ADD"), mMessages, () -> {
 
             Food food;
             try {
                 food = getFood();
             } catch (Exception ex) {
-                new InfoWindow(ex).open();
+                new InfoWindow(ex, mMessages).open();
                 return;
             }
             mTablePanel.add(food);
@@ -159,21 +157,21 @@ class ControlPanel extends Composite {
     }
 
     private void removeAllLikeButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, mMessages.getString("REMOVE_ALL"), () -> new ConfirmWindow((s, d) -> {
+        removeAllLikeButton = new CommonButton(parent, SWT.PUSH, mMessages.getString("REMOVE_ALL"), mMessages, () -> new ConfirmWindow((s, d) -> {
             try {
                 mTablePanel.deleteAllLike(getFood());
             } catch (ParseException e) {
-                new InfoWindow(e).open();
+                new InfoWindow(e, mMessages).open();
             }
         }, mMessages).open());
     }
 
     private void removeGreaterButton(Composite parent) {
-        new CommonButton(parent, SWT.PUSH, mMessages.getString("REM.GREATER"), () -> new ConfirmWindow((s,d) -> {
+        removeGreaterButton = new CommonButton(parent, SWT.PUSH, mMessages.getString("REM.GREATER"), mMessages, () -> new ConfirmWindow((s, d) -> {
             try {
                 mTablePanel.removeGreater(getFood());
             } catch (ParseException ex) {
-                new InfoWindow(ex).open();
+                new InfoWindow(ex, mMessages).open();
             }
         }, mMessages).open());
     }
@@ -184,5 +182,19 @@ class ControlPanel extends Composite {
         food.setDate(mDate.getText());
         food.setName(mName.getText());
         return food;
+    }
+
+    public void resetText(ResourceBundle messages) {
+        mMessages = messages;
+        mFilters[3].setText(mMessages.getString("Time"));
+        mFilters[2].setText(mMessages.getString("Date1"));
+        mFilters[1].setText(mMessages.getString("Taste"));
+        mFilters[0].setText(mMessages.getString("Name"));
+        refreshButton.resetText(mMessages);
+        removeButton.resetText(mMessages);
+        addIfmaxButton.resetText(mMessages);
+        createButton.resetText(mMessages);
+        removeAllLikeButton.resetText(mMessages);
+        removeGreaterButton.resetText(mMessages);
     }
 }

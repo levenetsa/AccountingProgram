@@ -7,7 +7,8 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Text;
+import java.util.ResourceBundle;
+
 import static org.eclipse.swt.SWT.*;
 
 public class InfoWindow {
@@ -21,7 +22,10 @@ public class InfoWindow {
      *}
      * */
 
-    InfoWindow(final Exception e) {
+    ResourceBundle mMessages;
+
+    InfoWindow(final Exception e, ResourceBundle messages) {
+        mMessages = messages;
         mShell = new Shell(APPLICATION_MODAL | BORDER | CLOSE);
         RowLayout layout = new RowLayout();
         mShell.layout();
@@ -34,7 +38,8 @@ public class InfoWindow {
         mShell.setSize(new Point(600,100));
     }
 
-    public InfoWindow(String title, String content){
+    public InfoWindow(String title, String content,  ResourceBundle messages){
+        mMessages = messages;
         mShell = new Shell();
         RowLayout layout = new RowLayout();
         layout.justify = true;
@@ -45,7 +50,7 @@ public class InfoWindow {
         text.setText(content);
         text.setLayoutData(new RowData(1200,30));
         mShell.setSize(new Point(600,100));
-        new CommonButton(mShell, SWT.PUSH,"Cancel", mShell::close);
+        new CommonButton(mShell, SWT.PUSH,"Cancel", mMessages, mShell::close);
     }
 
     public void open() {

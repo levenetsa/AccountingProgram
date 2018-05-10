@@ -38,13 +38,13 @@ class ConfirmWindow {
     }
 
     private void addOk(Shell shell) {
-        new CommonButton(shell, SWT.PUSH, mMessages.getString("ok"), () -> {
+        new CommonButton(shell, SWT.PUSH, mMessages.getString("ok"), mMessages, () -> {
             mCallback.onConfirm(null, null);
             shell.dispose();
         });
     }
 
     private void addCancel(Shell shell) {
-        new CommonButton(shell, SWT.PUSH, mMessages.getString("Cancel"), shell::close);
+        new CommonButton(shell, SWT.PUSH, mMessages.getString("Cancel"), mMessages, shell::close);
     }
 }
