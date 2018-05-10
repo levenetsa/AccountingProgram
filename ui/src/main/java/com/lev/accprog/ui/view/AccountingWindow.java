@@ -30,12 +30,12 @@ public class AccountingWindow {
         Shell oldShell = mMainShell;
         mMainShell =new Shell(mDisplay);
         mMainShell.setVisible(false);
-        mMainShell.setSize(900, 300);
+        mMainShell.setSize(950, 300);
         RowLayout layout = new RowLayout();
         mMessages = ResourceBundle.getBundle("messages",locale);
         mMainShell.setText(mMessages.getString("main_label"));
         mMainShell.setLayout(layout);
-        mTablePanel = new TablePanel(mMainShell, SWT.NONE, mQueueController, mMessages);
+        mTablePanel = new TablePanel(mMainShell,  SWT.NONE, mQueueController, mMessages);
         mControlPanel = new ControlPanel(mMainShell, SWT.NONE, mTablePanel, mMessages);
         setUpMenuBar();
         mMainShell.addListener(SWT.Close, event -> System.exit(0));
